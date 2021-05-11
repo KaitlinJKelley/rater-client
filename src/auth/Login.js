@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import "./Auth.css"
 
-
 export const Login = props => {
     const email = React.createRef()
     const password = React.createRef()
