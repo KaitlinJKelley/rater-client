@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from "react-router-dom"
 import './index.css';
-import Rater from './Rater';
+import { Rater } from './Rater';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Rater />
+    <Router>
+      <Rater />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
