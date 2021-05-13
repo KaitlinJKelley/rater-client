@@ -16,4 +16,10 @@ export const ReviewProvider = props => {
             .then(response => response.json())
             // .then(getGameReviews)
     }
+
+    return (
+        <ReviewContext.Provider value={{ createReview }} >
+            { props.children }
+        </ReviewContext.Provider>
+    )
 }
