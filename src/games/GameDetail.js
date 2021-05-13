@@ -22,7 +22,7 @@ export const GameDetail = () => {
             <p><b>Number of Players:</b> {game.num_of_players}</p>
             <p><b>Est. Time per Round:</b> {game.time_to_play} minutes</p>
             <p><b>Recommended Ages:</b> {game.min_age}</p>
-            <p><b>Category:</b> {game.category}</p>
+            <p><b>Categories:</b> {game.categories}</p>
         </article>
     )
 }
