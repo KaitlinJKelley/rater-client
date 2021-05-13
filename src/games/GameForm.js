@@ -13,6 +13,8 @@ export const GameForm = () => {
         title: "",
         designer: "",
         minAge: 0,
+        description: "",
+        releaseYear: 2001,
         categories: []
     })
 
@@ -103,6 +105,15 @@ export const GameForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
+                    <label htmlFor="description">Description of Game: </label>
+                    <input type="text" name="description" required autoFocus className="form-control"
+                        value={currentGame.description}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
                     <label htmlFor="numberOfPlayers">Number of Players: </label>
                     <input type="text" name="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame.numberOfPlayers}
@@ -110,26 +121,41 @@ export const GameForm = () => {
                     />
                 </div>
             </fieldset>
-            <label htmlFor="timeToPlay">Time to Play One Round (in minutes):</label>
-            <input type="text" name="timeToPlay" required autoFocus className="form-control"
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="releaseYear">Release Year: </label>
+                    <input type="text" name="releaseYear" required autoFocus className="form-control"
+                        value={currentGame.releaseYear}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <label htmlFor="timeToPlay">Time to Play One Round (in minutes):</label>
+                <input type="text" name="timeToPlay" required autoFocus className="form-control"
                         value={currentGame.timeToPlay}
                         onChange={handleInputChange}
                     />
-            <label htmlFor="minAge">Minimum Age:</label>
-            <input type="text" name="minAge" required autoFocus className="form-control"
+            </fieldset>
+            <fieldset>
+                <label htmlFor="minAge">Minimum Age:</label>
+                <input type="text" name="minAge" required autoFocus className="form-control"
                         value={currentGame.minAge}
                         onChange={handleInputChange}
                     />
-            <label htmlFor="categories">Categories:</label>
-            <section>
-                {categoryNames.map((cat) => {
-                    return <button key={`${cat}`} value={`${cat}`} onClick={removeCategory}>{cat}</button>
-                })}
-            </section>
-            <select value="0" name="categories" onChange={handleInputChange}>
-                <option value="0">Add a Category</option>
-                {categories.map(gt => <option id={`${gt.label}`}key={`${gt.id}`} value={`${gt.id}`}>{`${gt.label}`}</option>)}
-            </select>
+            </fieldset>
+            <fieldset>
+                <label htmlFor="categories">Categories:</label>
+                <section>
+                    {categoryNames.map((cat) => {
+                        return <button key={`${cat}`} value={`${cat}`} onClick={removeCategory}>{cat}</button>
+                    })}
+                </section>
+                <select value="0" name="categories" onChange={handleInputChange}>
+                    <option value="0">Add a Category</option>
+                    {categories.map(gt => <option id={`${gt.label}`}key={`${gt.id}`} value={`${gt.id}`}>{`${gt.label}`}</option>)}
+                </select>
+            </fieldset>
 
             <button type="submit"
                 onClick={evt => {
