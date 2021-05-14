@@ -57,6 +57,13 @@ export const GameDetail = () => {
                     <button type="submit" onClick={handleSave}>Save</button>
                 </form>
             }
+            <h3>Reviews</h3>
+            {game.reviews?.map(review => {
+                return <article>
+                    <p>{review.text}</p>
+                    <p>- {review.reviewer.user.first_name} {review.reviewer.user.last_name} {review.date_created}</p>
+                </article>
+            })}
         </article>
     )
 }
