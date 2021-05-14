@@ -23,6 +23,10 @@ export const GameDetail = () => {
         .then(setGame)
     }, [])
 
+    useEffect(() => {
+        averageStars()
+    }, [game])
+
     const handleChange = event => {
         const newReview = {...review}
         newReview[event.target.name] = event.target.value
@@ -45,6 +49,16 @@ export const GameDetail = () => {
         setReviewGameClicked(false)
     }
 
+    const averageStars = (rating) => {
+        let stars = ["☆","☆","☆","☆","☆"]
+        for(let i = 0; i < 5; i++){
+            if(rating >= 1){
+                stars[i] = "⭐️"
+            }
+        }
+        return stars
+    }
+
     return(
         <article className="gameCard">
             <h2>{game.title}</h2>
@@ -54,6 +68,7 @@ export const GameDetail = () => {
             <p><b>Est. Time per Round:</b> {game.time_to_play} minutes</p>
             <p><b>Recommended Ages:</b> {game.min_age}</p>
             <p><b>Categories:</b> {game.categories?.map(cat => <li key={Math.random()}>{cat.label}</li>)}</p>
+            <p>Average Rating: {averageStars(game.average_rating)} {game.average_rating?.toFixed(2)} out of 5</p>
             <button onClick={() => setReviewGameClicked(true)}>Review Game</button>
             {reviewGameClicked && 
                 <form>
@@ -75,6 +90,7 @@ export const GameDetail = () => {
             {game.reviews?.map(review => {
                 return <article>
                     <p>{review.text}</p>
+                    <p>{averageStars(review.rating)}</p>
                     <p>- {review.reviewer.user.first_name} {review.reviewer.user.last_name} {review.date_created}</p>
                 </article>
             })}
