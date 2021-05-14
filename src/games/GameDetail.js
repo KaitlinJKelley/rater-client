@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import StarRatings from 'react-star-ratings'
 import { useParams } from 'react-router'
 import { ReviewContext } from '../reviews/ReviewProvider'
 import { GameContext } from './GameProvider'
@@ -24,10 +25,15 @@ export const GameDetail = () => {
 
     const handleChange = event => {
         const newReview = {...review}
-
         newReview[event.target.name] = event.target.value
         setReview(newReview)
     }
+
+    const changeRating = rating => {
+        const newReview = {...review}
+        newReview.rating = rating
+        setReview(newReview)
+    } 
 
     const handleSave = (event) => {
         event.preventDefault()
@@ -54,6 +60,14 @@ export const GameDetail = () => {
                     <fieldset>
                         <textarea style={{ width: "60%", height: "80px"}} name="text" value={`${review.text}`} onChange={handleChange} placeholder={`Tell everyone what you think of ${game.title}`}></textarea>
                     </fieldset>
+                    <StarRatings 
+                        rating={review.rating}
+                        changeRating={changeRating}
+                        starRatedColor="rgb(230,230,0)"
+                        starHoverColor="rgb(230,230,0)"
+                        numberOfStars={5}
+                        name='rating'
+                    />
                     <button type="submit" onClick={handleSave}>Save</button>
                 </form>
             }

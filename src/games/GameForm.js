@@ -148,7 +148,7 @@ export const GameForm = () => {
                 <label htmlFor="categories">Categories:</label>
                 <section>
                     {categoryNames.map((cat) => {
-                        return <button key={`${cat}`} value={`${cat}`} onClick={removeCategory}>{cat}</button>
+                        return <button key={`${cat}`} value={`${cat}`} onClick={removeCategory}>X{cat}</button>
                     })}
                 </section>
                 <select value="0" name="categories" onChange={handleInputChange}>
