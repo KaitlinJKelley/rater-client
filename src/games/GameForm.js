@@ -12,6 +12,7 @@ export const GameForm = () => {
         numberOfPlayers: 0,
         title: "",
         designer: "",
+        description: "",
         minAge: 0,
         description: "",
         releaseYear: 2001,
@@ -28,13 +29,21 @@ export const GameForm = () => {
             getGameById(gameId)
             .then(game => {
                 let gameToEdit = {...currentGame}
+                let catNameEdit = [...categoryNames]
 
                 gameToEdit.id = game.id
                 gameToEdit.timeToPlay = game.time_to_play
                 gameToEdit.numberOfPlayers = game.num_of_players
                 gameToEdit.title = game.title
+                gameToEdit.description = game.description
                 gameToEdit.designer = game.designer
                 gameToEdit.minAge = game.min_age
+
+                game.categories.forEach(cat => {
+                    gameToEdit.categories.push(cat.id)
+                    catNameEdit.push(cat.label)
+                    setCategoryNames(catNameEdit)
+                })
 
                 setCurrentGame(gameToEdit)
             })

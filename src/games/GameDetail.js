@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import StarRatings from 'react-star-ratings'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { ReviewContext } from '../reviews/ReviewProvider'
 import { GameContext } from './GameProvider'
 
 export const GameDetail = () => {
     const {gameId} = useParams()
+    const history = useHistory()
 
     const {getGameById} = useContext(GameContext)
     const {createReview} = useContext(ReviewContext)
@@ -21,7 +22,7 @@ export const GameDetail = () => {
     useEffect(() => {
         getGameById(gameId)
         .then(setGame)
-    }, [])
+    }, [review])
 
     useEffect(() => {
         averageStars()
@@ -51,7 +52,7 @@ export const GameDetail = () => {
 
     const averageStars = (rating) => {
         let stars = ["☆","☆","☆","☆","☆"]
-        for(let i = 0; i < 5; i++){
+        for(let i = 0; i < rating; i++){
             if(rating >= 1){
                 stars[i] = "⭐️"
             }
@@ -68,6 +69,7 @@ export const GameDetail = () => {
             <p><b>Est. Time per Round:</b> {game.time_to_play} minutes</p>
             <p><b>Recommended Ages:</b> {game.min_age}</p>
             <p><b>Categories:</b> {game.categories?.map(cat => <li key={Math.random()}>{cat.label}</li>)}</p>
+            {game.is_owner && <button onClick={() => history.push(`/games/edit/${game.id}`)}>Edit</button>}
             <p>Average Rating: {averageStars(game.average_rating)} {game.average_rating?.toFixed(2)} out of 5</p>
             <button onClick={() => setReviewGameClicked(true)}>Review Game</button>
             {reviewGameClicked && 
