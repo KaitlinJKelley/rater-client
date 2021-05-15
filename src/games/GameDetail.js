@@ -3,6 +3,7 @@ import StarRatings from 'react-star-ratings'
 import { useHistory, useParams } from 'react-router'
 import { ReviewContext } from '../reviews/ReviewProvider'
 import { GameContext } from './GameProvider'
+import { PictureContext } from '../pictures/PictureProvider'
 
 export const GameDetail = () => {
     const {gameId} = useParams()
@@ -10,14 +11,27 @@ export const GameDetail = () => {
 
     const {getGameById} = useContext(GameContext)
     const {createReview} = useContext(ReviewContext)
+    const {createGameImageString, b64, uploadPicture} = useContext(PictureContext)
 
     const [reviewGameClicked, setReviewGameClicked] = useState(false)
     const [game, setGame] = useState({})
+    const [picture, setPicture] = useState({
+        game_id: 0,
+        game_image: ""
+    })
+
     const [review, setReview] = useState({
         text: "",
         rating: 0,
         gameId: 0
     })
+
+    useEffect(() => {
+        let copyPicture = {...picture}
+        copyPicture.game_image = b64
+        copyPicture.game_id = game.id
+        setPicture(copyPicture)
+    }, [b64])
 
     useEffect(() => {
         getGameById(gameId)
@@ -71,6 +85,12 @@ export const GameDetail = () => {
             <p><b>Categories:</b> {game.categories?.map(cat => <li key={Math.random()}>{cat.label}</li>)}</p>
             {game.is_owner && <button onClick={() => history.push(`/games/edit/${game.id}`)}>Edit</button>}
             <p>Average Rating: {averageStars(game.average_rating)} {game.average_rating?.toFixed(2)} out of 5</p>
+            <input type="file" id="game_image" onChange={createGameImageString} />
+            <input type="hidden" name="game_id" value={game.id} />
+            <button onClick={() => {
+                // Upload the stringified image that is stored in state
+                uploadPicture(picture)
+            }}>Upload</button>
             <button onClick={() => setReviewGameClicked(true)}>Review Game</button>
             {reviewGameClicked && 
                 <form>
